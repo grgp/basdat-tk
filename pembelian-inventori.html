@@ -38,11 +38,31 @@
         <div class = "col-md-1">Tanggal:</div>
         <div class = "col-md-5"><input type="text" id="datepicker"></input></div>
 		</div>
+	</div>
+<!--
     <div class = "row">
         <div class = "col-md-3">URUTKAN BERDASARKAN:</div>
         <div class = "col-md-5">[<a id="sortwaktu">Waktu</a>,<a id="sortnomor">Nomor Nota</a>,<a id="sortsupplier">Supplier</a>,<a id="sortstaf">Staf</a>]</div>
         <div class = "col-md-2">[<a id="sortasc">Asc</a>,<a id="sortdesc">Desc</a>]</div>
 	</div>
+-->
+    <div class="btn-group" role="group" aria-label="...">
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default">Waktu</button>
+        </div>
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default">Nomor Nota</button>
+        </div>
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default">Supplier</button>
+        </div>
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default">Staf</button>
+        </div>
+    </div>
+
+    <button type="button" class="btn btn-default btn-ascdesc pull-right">Asc/Desc</button>
+    
 	<table id="datatable" border=1 class="table">
 	<tr>
 		<th>Nomor Nota</th>
