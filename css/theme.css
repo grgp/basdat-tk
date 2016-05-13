@@ -5,3 +5,14 @@
 .pushabit {
 	margin-top: 15px;
 }
+
+.navbar {
+	background-color: #0d47a1;
+	border: none;
+	color: white;
+	font-weight: 600;
+}
+
+.navbar a {
+	color: white;
+}

@@ -9,11 +9,35 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.js"></script>
 </head>
 <body style="margin:10">
-	<h1 class="text-center">SILUTEL - PEMBELIAN INVENTORI</h1>
+	<nav class="navbar navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">SILUTEL</a>
+			</div>
+
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li class="active"><a>BELI INVENTORI<span class="sr-only">(current)</span></a></li>
+				</ul>
+				
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li><span class="sr-only">(current)</span></a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<h1 class="text-center pushdown">SILUTEL - PEMBELIAN INVENTORI</h1>
     <div class = "row">
         <div class = "col-md-1">Tanggal:</div>
         <div class = "col-md-5"><input type="text" id="datepicker"></input></div>
-	</div>
+		</div>
     <div class = "row">
         <div class = "col-md-3">URUTKAN BERDASARKAN:</div>
         <div class = "col-md-5">[<a id="sortwaktu">Waktu</a>,<a id="sortnomor">Nomor Nota</a>,<a id="sortsupplier">Supplier</a>,<a id="sortstaf">Staf</a>]</div>
