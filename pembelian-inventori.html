@@ -1,0 +1,32 @@
+<html>
+<head>
+	<title>PEMBELIAN INVENTORI</title>
+	<script src="js/jquery-1.12.2.min.js"></script>
+	<script src="js/script.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.js"></script>
+</head>
+<body style="margin:10">
+	<h3>SILUTEL-PEMBELIAN INVENTORI</h3>
+    <div class = "row">
+        <div class = "col-md-1">Tanggal:</div>
+        <div class = "col-md-5"><input type="text" id="datepicker"></input></div>
+	</div>
+    <div class = "row">
+        <div class = "col-md-3">URUTKAN BERDASARKAN:</div>
+        <div class = "col-md-5">[<a id="sortwaktu">Waktu</a>,<a id="sortnomor">Nomor Nota</a>,<a id="sortsupplier">Supplier</a>,<a id="sortstaf">Staf</a>]</div>
+        <div class = "col-md-2">[<a id="sortasc">Asc</a>,<a id="sortdesc">Desc</a>]</div>
+	</div>
+	<table id="datatable" border=1 class="table">
+	<tr>
+		<th>Nomor Nota</th>
+		<th>Waktu</th>
+		<th>Supplier</th>
+		<th>Staf</th>
+		<th></th>
+	</tr>
+	</table>
+	<div id="tableselector"></div>
+	
+</body>
