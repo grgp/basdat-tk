@@ -4,7 +4,7 @@
 		<meta name="description" content="Database Final Task - SILUTEL">
 		<meta name="keywords" content="HTML">
 		<meta name="author" content="Muhammad Sabiq Danurrohman">
-		<title>SILUTEL</title>
+		<title>Lihat Laundry</title>
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="css/theme.css">
 		<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
@@ -27,7 +27,7 @@
 
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
-						<li class="active"><a>BELI INVENTORI<span class="sr-only">(current)</span></a></li>
+						<li class="active"><a>Lihat Laundry<span class="sr-only">(current)</span></a></li>
 					</ul>
 					
 					<ul class="nav navbar-nav navbar-right">
@@ -42,10 +42,25 @@
 				<table class="table table-hover">
 					<h1 style="text-align:center">SILUTEL - LAUNDRY</h1>
 					<form action="action_page.php">
-  					<input type="date" name="bday">
+  					<input type="date" name="bday" style="float: left";>
 					</form>
-					<h4> Urutkan Berdasarkan: </h4>
-					<tr class="active">
+	    <div class="btn-group" role="group" aria-label="..." style="margin-left: 10px;">
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default">Nama</button>
+        </div>
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default">Merk</button>
+        </div>
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default">Staf</button>
+        </div>
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default">Waktu</button>
+        </div>
+    </div>
+
+    <button type="button" class="btn btn-default btn-ascdesc pull-right">Asc/Desc</button>
+					<tr class="active pushabit" >
 					  <th>Nama</th>
 					  <th>Merk</th>
 					  <th>Staf</th>
