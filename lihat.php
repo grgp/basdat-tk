@@ -5,8 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
 		<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">-->
-		<link rel="stylesheet" href="style-g.css">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flat-ui/2.3.0/css/flat-ui.css">
+		<link rel="stylesheet" href="css/bootstrap-flatly.min.css">
 
 		<link href='https://fonts.googleapis.com/css?family=Lato:400,700,300,900' rel='stylesheet' type='text/css'>
 		<link href='https://fonts.googleapis.com/css?family=Josefin+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
@@ -17,6 +16,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-8 col-md-offset-2">
+				<div class="well">
 					<div class="row">
 						<h3 class="text-center">SILUTEL - BOOKING</h3>
 
@@ -32,7 +32,7 @@
 						  </div>
 						</div>
 
-						<button type="button" class="btn btn-default btn-ascdesc">Left</button>
+						<button type="button" class="btn btn-default btn-ascdesc pull-right">Left</button>
 					</div>
 					<div class="row">
 						<table class="table">
@@ -75,7 +75,7 @@
 						</table>
 					</div> <!-- end row -->
 				</div> <!-- end col -->
-			</div>
+			</div> <!-- end outer row -->
 		</div> <!-- end container -->
 	</body>
 
