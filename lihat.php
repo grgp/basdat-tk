@@ -38,33 +38,41 @@
 							</div>
 							<div class="row">
 								<table>
-									<th></th>
 									<tr>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
+										<th>Invoice</th>
+										<th>Tanggal Datang</th>
+										<th>Tanggal Pergi</th>
+										<th>Jumlah</th>
+										<th>Discount</th>
+										<th>Total</th>
+										<th>Nama Tamu</th>
 									</tr>
 									<tr>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
+										<td>ABC789</td>
+										<td>05/05/2016 20:14</td>
+										<td>08/05/2016 10:00</td>
+										<td>2</td>
+										<td>0</td>
+										<td>4,500,000</td>
+										<td>Anto</td>
 									</tr>
 									<tr>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
+										<td>ABC456</td>
+										<td>05/05/2016 15:44</td>
+										<td>07/05/2016 10:00</td>
+										<td>1</td>
+										<td>0</td>
+										<td>1,800,000</td>
+										<td>Budi</td>
+									</tr>
+									<tr>
+										<td>ABC123</td>
+										<td>05/05/2016 13:24</td>
+										<td>09/05/2016 09:00</td>
+										<td>3</td>
+										<td>0</td>
+										<td>3,600,000</td>
+										<td>Chandra</td>
 									</tr>
 								</table>
 							</div>
