@@ -88,6 +88,7 @@
 								$result = queryDB("SELECT * FROM silutel.invoice");
 
 								while ($row = pg_fetch_row($result)) {
+									echo "<tr>";
 								  foreach ($row as &$item) {
 								  	echo "<td>$item</td>";
 									}
