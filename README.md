@@ -1,6 +1,14 @@
 # basdat-tk
 Group task for the database class, UI Computer Science 2016
 
+## quick guide to setting up postgresql with xampp
+
+1. Go to `C:/xampp`
+2. Copy file `C:/xampp/php/libpq.dll` to `C:/xampp/php/ext/`
+3. Add `LoadFile “C:/xampp/php/libpq.dll”` at the bottom of the file named `C:/xampp/apache/conf/httpd.conf`
+4. (some steps might be missing)
+5. Restart xampp (stop and restart Apache)
+
 ## quick guide to git
 
 1. Download Git at https://git-scm.com/download/win

@@ -16,6 +16,7 @@
 	</head>
 
 	<body>
+
 	<script>
 			var current = new Date();
 			$( "#datepicker" ).datepicker({dateFormat:"yy/mm/dd"}).datepicker("setDate",new Date());
@@ -49,7 +50,7 @@
 				<div class="col-md-8 col-md-offset-2">
 				<div class="">
 					<div class="row">
-						<h3 class="text-center">SILUTEL - BOOKING</h3>
+						<h3 class="text-center">Lihat Booking</h3>
 
 						<div class = "row">
 				        <div class = "col-md-1">Tanggal:</div>
@@ -81,7 +82,19 @@
 								<th>Total</th>
 								<th>Nama Tamu</th>
 							</tr>
-							<tr>
+							<?php
+								require 'db/connect.php';
+								
+								$result = queryDB("SELECT * FROM silutel.invoice");
+
+								while ($row = pg_fetch_row($result)) {
+								  foreach ($row as &$item) {
+								  	echo "<td>$item</td>";
+									}
+								  echo "</tr>";
+								}
+							?>
+<!-- 							<tr>
 								<td>ABC789</td>
 								<td>05/05/2016 20:14</td>
 								<td>08/05/2016 10:00</td>
@@ -89,25 +102,7 @@
 								<td>0</td>
 								<td>4,500,000</td>
 								<td>Anto</td>
-							</tr>
-							<tr>
-								<td>ABC456</td>
-								<td>05/05/2016 15:44</td>
-								<td>07/05/2016 10:00</td>
-								<td>1</td>
-								<td>0</td>
-								<td>1,800,000</td>
-								<td>Budi</td>
-							</tr>
-							<tr>
-								<td>ABC123</td>
-								<td>05/05/2016 13:24</td>
-								<td>09/05/2016 09:00</td>
-								<td>3</td>
-								<td>0</td>
-								<td>3,600,000</td>
-								<td>Chandra</td>
-							</tr>
+							</tr> -->
 						</table>
 					</div> <!-- end row -->
 				</div> <!-- end col -->
