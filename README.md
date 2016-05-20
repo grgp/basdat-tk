@@ -3,11 +3,17 @@ Group task for the database class, UI Computer Science 2016
 
 ## quick guide to setting up postgresql with xampp
 
+0. Make sure PostgreSQL is already installed
 1. Go to `C:/xampp`
 2. Copy file `C:/xampp/php/libpq.dll` to `C:/xampp/php/ext/`
-3. Add `LoadFile “C:/xampp/php/libpq.dll”` at the bottom of the file named `C:/xampp/apache/conf/httpd.conf`
-4. (some steps might be missing)
-5. Restart xampp (stop and restart Apache)
+3. Open `C:/xampp/php/php.ini`, uncomment the following lines:
+```
+extension=php_pdo_pgsql.dll
+extension=php_pgsql.dll
+```
+4. Open `C:/xampp/apache/conf/httpd.conf`, then add `LoadFile “C:/xampp/php/libpq.dll”` on a new line at the bottom of the file
+5. (some steps might be missing)
+6. Restart xampp (stop and restart Apache)
 
 ## quick guide to git
 
@@ -24,5 +30,12 @@ If you want to update the code (*repository*) with your own modification you sho
 ```
 git add .
 git commit -m "type the things that you have modified"
+git push origin master
+```
+
+So for example, after editing login.php's form, run
+```
+git add .
+git commit -m "edited login.php's form"
 git push origin master
 ```
