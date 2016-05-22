@@ -1,3 +1,19 @@
+<?php
+	require 'db/connect.php';
+
+	if (!isset($_GET["sort"]) || !isset($_GET["by"]) || !isset($_GET["p"])) {
+		$sortby = "nomorinvoice";
+		$ascdesc = "desc";
+		$pagenum = 1;
+	} else {
+		$sortby = htmlspecialchars($_GET["sort"]);
+		$ascdesc = htmlspecialchars($_GET["by"]);
+		$pagenum = htmlspecialchars($_GET["p"]);
+	}
+
+	$offset = ($pagenum - 1) * 15;
+?>
+
 <html>
 	<head>
 		<title>Lihat Booking</title>
@@ -59,17 +75,25 @@
 						<br>
 						<div class="btn-group" role="group" aria-label="...">
 						  <div class="btn-group" role="group">
-						    <button type="button" class="btn btn-default">Invoice</button>
+						  	<a href="<?php echo "?sort=" . "nomorinvoice" . "&by=" . $ascdesc . "&p=" . $pagenum; ?>">
+						    	<button type="button" class="btn btn-default">Invoice</button>
+						    </a>
 						  </div>
 						  <div class="btn-group" role="group">
-						    <button type="button" class="btn btn-default">Tanggal Datang</button>
+								<a href="<?php echo "?sort=" . "tanggaldatang" . "&by=" . $ascdesc . "&p=" . $pagenum; ?>">
+						  	  <button type="button" class="btn btn-default">Tanggal Datang</button>
+						  	</a>
 						  </div>
 						  <div class="btn-group" role="group">
-						    <button type="button" class="btn btn-default">Tanggal Pergi</button>
+						  	<a href="<?php echo "?sort=" . "tanggalpergi" . "&by=" . $ascdesc . "&p=" . $pagenum; ?>">
+						    	<button type="button" class="btn btn-default">Tanggal Pergi</button>
+						    </a>
 						  </div>
 						</div>
 
-						<button type="button" class="btn btn-default btn-ascdesc pull-right">Asc/Desc</button>
+						<a href="<?php echo "?sort=" . $sortby . "&by=" . ($ascdesc == "asc" ? "desc" : "asc") . "&p=" . $pagenum; ?>">
+							<button type="button" class="btn btn-default btn-ascdesc pull-right">Asc/Desc</button>
+						</a>
 					</div>
 					<div class="row pushabit">
 						<table class="table">
@@ -83,13 +107,6 @@
 								<th>Nama Tamu</th>
 							</tr>
 							<?php
-								require 'db/connect.php';
-								
-								$sortby = "nomorinvoice";
-								$ascdesc = "DESC";
-								$pagenum = 1;
-								$offset = ($pagenum - 1) * 15;
-
 								$result = queryDB("SELECT * FROM silutel.invoice ORDER BY $sortby $ascdesc LIMIT 15 OFFSET $offset");
 
 								while ($row = pg_fetch_row($result)) {
@@ -106,7 +123,7 @@
 <!-- 					<tr>
 								<td>ABC789</td>
 								<td>05/05/2016 20:14</td>
-								<td>08/05/2016 10:00</td>
+								<td>08/05/2016 10:00</td>sud
 								<td>2</td>
 								<td>0</td>
 								<td>4,500,000</td>
