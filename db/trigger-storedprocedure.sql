@@ -3,6 +3,8 @@
 CREATE OR REPLACE FUNCTION hitung_total_invoice()
 RETURNS TRIGGER AS
 $$
+  DECLARE
+    row RECORD;
   BEGIN
   IF (TG_OP = 'INSERT') THEN
     UPDATE silutel.invoice SET total =
@@ -11,6 +13,13 @@ $$
     WHERE n.nomorinvoice = NEW.nomorinvoice AND n.nomorkamar = k.nomor 
           AND n.lantaikamar = k.lantai AND k.namatipekamar = t.nama)
     WHERE nomorinvoice = NEW.nomorinvoice;
+    
+    FOR row IN
+        SELECT nomorinvoice FROM silutel.invoice WHERE idtamu = NEW.idtamu OFFSET 10
+    LOOP
+        UPDATE silutel.invoice SET diskon = total / 10 WHERE nomorinvoice = row.nomorinvoice
+        UPDATE silutel.invoice SET total = total - diskon WHERE nomorinvoice = row.nomorinvoice
+    END LOOP
 
   ELSEIF (TG_OP = 'DELETE') THEN
     UPDATE silutel.invoice SET total =
@@ -19,6 +28,13 @@ $$
     WHERE n.nomorinvoice = OLD.nomorinvoice AND n.nomorkamar = k.nomor 
           AND n.lantaikamar = k.lantai AND k.namatipekamar = t.nama)
     WHERE nomorinvoice = OLD.nomorinvoice;
+
+    FOR row IN
+        SELECT nomorinvoice FROM silutel.invoice WHERE idtamu = OLD.idtamu OFFSET 10
+    LOOP
+        UPDATE silutel.invoice SET diskon = total / 10 WHERE nomorinvoice = row.nomorinvoice
+        UPDATE silutel.invoice SET total = total - diskon WHERE nomorinvoice = row.nomorinvoice
+    END LOOP
 
   ELSEIF (TG_OP = 'UPDATE') THEN
     UPDATE silutel.invoice SET total =
@@ -34,6 +50,21 @@ $$
     WHERE n.nomorinvoice = OLD.nomorinvoice AND n.nomorkamar = k.nomor 
           AND n.lantaikamar = k.lantai AND k.namatipekamar = t.nama)
     WHERE nomorinvoice = OLD.nomorinvoice;
+    
+    FOR row IN
+        SELECT nomorinvoice FROM silutel.invoice WHERE idtamu = NEW.idtamu OFFSET 10
+    LOOP
+        UPDATE silutel.invoice SET diskon = total / 10 WHERE nomorinvoice = row.nomorinvoice
+        UPDATE silutel.invoice SET total = total - diskon WHERE nomorinvoice = row.nomorinvoice
+    END LOOP
+        
+    FOR row IN
+        SELECT nomorinvoice FROM silutel.invoice WHERE idtamu = OLD.idtamu OFFSET 10
+    LOOP
+        UPDATE silutel.invoice SET diskon = total / 10 WHERE nomorinvoice = row.nomorinvoice
+        UPDATE silutel.invoice SET total = total - diskon WHERE nomorinvoice = row.nomorinvoice
+    END LOOP
+
   END IF;
   RETURN NEW;
   END;
