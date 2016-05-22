@@ -85,13 +85,21 @@
 							<?php
 								require 'db/connect.php';
 								
-								$result = queryDB("SELECT * FROM silutel.invoice");
+								$sortby = "nomorinvoice";
+								$ascdesc = "DESC";
+								$pagenum = 1;
+								$offset = ($pagenum - 1) * 15;
+
+								$result = queryDB("SELECT * FROM silutel.invoice ORDER BY $sortby $ascdesc LIMIT 15 OFFSET $offset");
 
 								while ($row = pg_fetch_row($result)) {
 									echo "<tr>";
-								  foreach ($row as &$item) {
-								  	echo "<td>$item</td>";
+								  for ($i = 0; $i < 4; $i++) {
+								  	echo "<td>$row[$i]</td>";
 									}
+										echo "<td>$row[5]</td>";
+										echo "<td>$row[6]</td>";
+										echo "<td>$row[4]</td>";
 								  echo "</tr>";
 								}
 							?>
@@ -105,6 +113,17 @@
 								<td>Anto</td>
 							</tr> -->
 						</table>
+
+						<div class="text-center">
+							<ul class="pagination">
+							  <li class="active"><a href="#">1</a></li>
+							  <li><a href="#">2</a></li>
+							  <li><a href="#">3</a></li>
+							  <li><a href="#">4</a></li>
+							  <li><a href="#">5</a></li>
+							</ul>
+						</div>
+
 					</div> <!-- end row -->
 				</div> <!-- end col -->
 			</div> <!-- end outer row -->
