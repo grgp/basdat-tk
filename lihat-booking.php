@@ -1,12 +1,13 @@
 <?php
 	require 'db/connect.php';
 
-	if (!isset($_GET["sort"]) || !isset($_GET["by"]) || !isset($_GET["p"])) {
+	if (!isset($_GET["d"]) || !isset($_GET["s"]) || !isset($_GET["by"]) || !isset($_GET["p"])) {
+		$d = "2015";
 		$sortby = "nomorinvoice";
 		$ascdesc = "desc";
 		$pagenum = 1;
 	} else {
-		$sortby = htmlspecialchars($_GET["sort"]);
+		$sortby = htmlspecialchars($_GET["s"]);
 		$ascdesc = htmlspecialchars($_GET["by"]);
 		$pagenum = htmlspecialchars($_GET["p"]);
 	}
@@ -75,23 +76,23 @@
 						<br>
 						<div class="btn-group" role="group" aria-label="...">
 						  <div class="btn-group" role="group">
-						  	<a href="<?php echo "?sort=" . "nomorinvoice" . "&by=" . $ascdesc . "&p=" . $pagenum; ?>">
+						  	<a href="<?php echo "?s=" . "nomorinvoice" . "&by=" . $ascdesc . "&p=" . $pagenum; ?>">
 						    	<button type="button" class="btn btn-default">Invoice</button>
 						    </a>
 						  </div>
 						  <div class="btn-group" role="group">
-								<a href="<?php echo "?sort=" . "tanggaldatang" . "&by=" . $ascdesc . "&p=" . $pagenum; ?>">
+								<a href="<?php echo "?s=" . "tanggaldatang" . "&by=" . $ascdesc . "&p=" . $pagenum; ?>">
 						  	  <button type="button" class="btn btn-default">Tanggal Datang</button>
 						  	</a>
 						  </div>
 						  <div class="btn-group" role="group">
-						  	<a href="<?php echo "?sort=" . "tanggalpergi" . "&by=" . $ascdesc . "&p=" . $pagenum; ?>">
+						  	<a href="<?php echo "?s=" . "tanggalpergi" . "&by=" . $ascdesc . "&p=" . $pagenum; ?>">
 						    	<button type="button" class="btn btn-default">Tanggal Pergi</button>
 						    </a>
 						  </div>
 						</div>
 
-						<a href="<?php echo "?sort=" . $sortby . "&by=" . ($ascdesc == "asc" ? "desc" : "asc") . "&p=" . $pagenum; ?>">
+						<a href="<?php echo "?s=" . $sortby . "&by=" . ($ascdesc == "asc" ? "desc" : "asc") . "&p=" . $pagenum; ?>">
 							<button type="button" class="btn btn-default btn-ascdesc pull-right">Asc/Desc</button>
 						</a>
 					</div>

@@ -1,4 +1,52 @@
+--1. Pada table INVOICE terdapat kolom ‘Discount’ dan ‘Total’. Nilai kolom ‘Discount’ diupdate bila sudah tercatat data tamu lebih dari 10x pada table INVOICE dan nilai ‘Total’ diupdate berdasarkan harga dari semua kamar yang dipesan setelah dikalikan diskon. 
+
+CREATE OR REPLACE FUNCTION hitung_total_invoice()
+RETURNS TRIGGER AS
+$$
+  BEGIN
+  IF (TG_OP = 'INSERT') THEN
+    UPDATE silutel.invoice SET total =
+    (SELECT SUM(harga)
+    FROM invoice_kamar n, kamar k, tipe_kamar t 
+    WHERE n.nomorinvoice = NEW.nomorinvoice AND n.nomorkamar = k.nomor 
+          AND n.lantaikamar = k.lantai AND k.namatipekamar = t.nama)
+    WHERE nomorinvoice = NEW.nomorinvoice;
+
+  ELSEIF (TG_OP = 'DELETE') THEN
+    UPDATE silutel.invoice SET total =
+    (SELECT SUM(harga)
+    FROM invoice_kamar n, kamar k, tipe_kamar t
+    WHERE n.nomorinvoice = OLD.nomorinvoice AND n.nomorkamar = k.nomor 
+          AND n.lantaikamar = k.lantai AND k.namatipekamar = t.nama)
+    WHERE nomorinvoice = OLD.nomorinvoice;
+
+  ELSEIF (TG_OP = 'UPDATE') THEN
+    UPDATE silutel.invoice SET total =
+    (SELECT SUM(harga)
+    FROM invoice_kamar n, kamar k, tipe_kamar t
+    WHERE n.nomorinvoice = NEW.nomorinvoice AND n.nomorkamar = k.nomor 
+          AND n.lantaikamar = k.lantai AND k.namatipekamar = t.nama)
+    WHERE nomorinvoice = NEW.nomorinvoice;
+
+    UPDATE silutel.invoice SET total =
+    (SELECT SUM(harga)
+    FROM invoice_kamar n, kamar k, tipe_kamar t
+    WHERE n.nomorinvoice = OLD.nomorinvoice AND n.nomorkamar = k.nomor 
+          AND n.lantaikamar = k.lantai AND k.namatipekamar = t.nama)
+    WHERE nomorinvoice = OLD.nomorinvoice;
+  END IF;
+  RETURN NEW;
+  END;
+$$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER total_invoice
+AFTER INSERT OR DELETE OR UPDATE
+ON silutel.invoice_kamar FOR EACH ROW
+EXECUTE PROCEDURE hitung_total_invoice();
+
 -- Trigger 2 (Faisal)
+--Pada table LAUNDRY_STAF_LAUNDRY terdapat kolom ‘Total’. Nilai kolom ini diperoleh dari informasi banyaknya inventori yang dilaundry pada table LAUNDRY_INVENTORI.
 
 CREATE OR REPLACE FUNCTION hitung_total_laundry()
 RETURNS trigger AS
@@ -50,6 +98,7 @@ ON LAUNDRY_INVENTORI FOR EACH ROW
 EXECUTE PROCEDURE hitung_total_laundry();
 
 -- Trigger 3 (Sabiq)
+-- Pada table INVENTORI terdapat kolom ‘Stok’. Nilai kolom ini diupdate setiap kali ada INSERT/UPDATE/DELETE sebuah PEMBELIAN_INVENTORI dan/atau INSERT/UPDATE/DELETE pada table STAF_MENGGANTI_INVENTORI
 
 CREATE OR REPLACE FUNCTION hitung_pembelian_inventori() RETURNS trigger AS $$
 
