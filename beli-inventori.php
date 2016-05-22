@@ -1,3 +1,10 @@
+<?php
+	session_start();
+	if(!isset($_SESSION["userlogin"]) || $_SESSION["role"] <> "IN"){
+		header("Location: login.php");
+	}
+?>
+
 <!DOCTYPE html>
 
 <html>
@@ -7,15 +14,6 @@
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="css/theme.css">
 		<link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
-		<style>
-			#sel1,#sel2,#sel3 {
-				border : 0px;
-				box-shadow : 0px 0px 0px;
-				border-bottom : 1px solid #a6a6a6;
-				border-radius : 0px;
-			
-			}
-		</style>
 	</head>
 	
 	<body>	
@@ -57,12 +55,15 @@
 						<td>Supplier</td>
 						<td style="padding-left:2%; padding-right:1%"> : </td>
 						<td>
-							<select class="form-control" id="sel1">
-								<option>GoodLife</option>
-								<option>GoodProduct</option>
-								<option>GoodTime</option>
-								<option>GoodCompany</option>
-								<option>GoodMarket</option>
+							<select class="form-control" style="border : 0px;box-shadow : 0px 0px 0px;border-bottom : 1px solid #a6a6a6;border-radius : 0px;" id="sel1">
+								<?php
+									require "db/connect.php";
+									$result = queryDB("SELECT nama FROM silutel.supplier");
+
+									while ($row = pg_fetch_row($result)) {
+										echo "<option>".$row[0]."</option>";
+									}
+								?>
 							</select>
 						</td>
 						<td>
@@ -78,11 +79,11 @@
 						<td style="border:0px"></td>
 						<td style="border:0px"></td>
 						<td style="border:0px">
-							<button style="float:right" class="btn btn-default" type="submit">Tambah Inventori</button>
+							<button style="float:right" class="btn btn-default" onclick="tambah()">Tambah Inventori</button>
 						</td>
 					</tr>
 				</table>
-				<table class="table table-hover">
+				<table class="table table-hover" style="border : 1px solid #a6a6a6" method ="POST" id="tableData">
 					<tr class="warning">
 						<td>Nama Inventori</td>
 						<td>Merk</td>
@@ -90,63 +91,47 @@
 						<td>Jumlah</td>
 						<td>Total</td>
 					</tr>
-					<tbody>
 					<tr>
 						<td>
-							<select class="form-control" id="sel2">
-								<option>Pilih</option>
-								<option>Pasta Gigi</option>
-								<option>Shampoo</option>
-								<option>Odol</option>
-								<option>Bantal</option>
+							<select class="form-control" style="border : 0px;box-shadow : 0px 0px 0px;border-bottom : 1px solid #a6a6a6;border-radius : 0px;" id="sel2" >
+								<?php
+									$result1 = queryDB("SELECT * FROM silutel.Inventori");
+
+									while ($row = pg_fetch_row($result1)) {
+										echo "<option>".$row[0]."</option>";
+									}
+								?>
 							</select>
 						</td>
 						<td>
-							<select class="form-control" id="sel3">
-								<option>Pilih</option>
-								<option>ABC</option>
-								<option>DEF</option>
-								<option>GHI</option>
-								<option>IJK</option>
+							<select class="form-control" style="border : 0px;box-shadow : 0px 0px 0px;border-bottom : 1px solid #a6a6a6;border-radius : 0px;" id="sel3">
+								<?php
+									$result2 = queryDB("SELECT * FROM silutel.Inventori");
+
+									while ($row = pg_fetch_row($result2)) {
+										echo "<option>".$row[1]."</option>";
+									}
+								?>
 							</select>
 						</td>
 						<td>
-							<h5>10,000</h5>
+							<form> 
+							  <div class="form-group">
+							    <input style="border : 0px;box-shadow : 0px 0px 0px;border-bottom : 1px solid #a6a6a6;border-radius : 0px;"
+							    		type="number" class="form-control" id="harga1" onChange="calculation('keluaran1','harga1','jumlah1')" placeholder="Harga">
+							  </div>
+							</form>
 						</td>
 						<td>
-							<h5>50</h5>
+							<form> 
+							  <div class="form-group">
+							    <input style="border : 0px;box-shadow : 0px 0px 0px;border-bottom : 1px solid #a6a6a6;border-radius : 0px;"
+							    		type="number" class="form-control" id="jumlah1" onChange="calculation('keluaran1','harga1','jumlah1')" placeholder="Jumlah">
+							  </div>
+							</form>
 						</td>
 						<td>
-							<h5>500,000</h5>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<select class="form-control" id="sel2">
-								<option>Pilih</option>
-								<option>Pasta Gigi</option>
-								<option>Shampoo</option>
-								<option>Odol</option>
-								<option>Bantal</option>
-							</select>
-						</td>
-						<td>
-							<select class="form-control" id="sel3">
-								<option>Pilih</option>
-								<option>ABC</option>
-								<option>DEF</option>
-								<option>GHI</option>
-								<option>IJK</option>
-							</select>
-						</td>
-						<td>
-							<h5>20,000</h5>
-						</td>
-						<td>
-							<h5>100</h5>
-						</td>
-						<td>
-							<h5>1000,000</h5>
+						<h5 id = 'keluaran1'> </h5>
 						</td>
 					</tr>
 				</table>
@@ -164,7 +149,35 @@
 			</div>
 		</div>
 	</body>
-	
+	<script>
+		var counter = 1;
+		var sel = 3;
+		function tambah() {
+			counter += 1;
+			sel += 1;
+			var table = document.getElementById("tableData");
+			var row = table.insertRow();
+			var cell1 = row.insertCell(0);
+    		var cell2 = row.insertCell(1);
+    		var cell3 = row.insertCell(2);
+    		var cell4 = row.insertCell(3);
+    		var cell5 = row.insertCell(4);
+    		cell1.innerHTML = '<select class="form-control" style="border : 0px;box-shadow : 0px 0px 0px;border-bottom : 1px solid #a6a6a6;border-radius : 0px;" id="sel'+sel+'"><?php $result1 = queryDB("SELECT * FROM silutel.Inventori"); while ($row = pg_fetch_row($result1)) { echo "<option>".$row[0]."</option>";} ?></select>';
+    		sel += 1;
+    		cell2.innerHTML = '<select class="form-control" style="border : 0px;box-shadow : 0px 0px 0px;border-bottom : 1px solid #a6a6a6;border-radius : 0px;" id="sel'+sel+'"><?php $result1 = queryDB("SELECT * FROM silutel.Inventori"); while ($row = pg_fetch_row($result1)) { echo "<option>".$row[1]."</option>";} ?></select>';
+    		cell3.innerHTML = '<form><div class="form-group"><input style="border : 0px;box-shadow : 0px 0px 0px;border-bottom : 1px solid #a6a6a6;border-radius : 0px;"type="number" class="form-control" id="harga'+counter+'" onChange="calculation(\'keluaran'+counter+'\',\'harga'+counter+'\',\'jumlah'+counter+'\')" placeholder="Harga"></div></form>';
+    		cell4.innerHTML = '<form><div class="form-group"><input style="border : 0px;box-shadow : 0px 0px 0px;border-bottom : 1px solid #a6a6a6;border-radius : 0px;"type="number" class="form-control" id="jumlah'+counter+'" onChange="calculation(\'keluaran'+counter+'\',\'harga'+counter+'\',\'jumlah'+counter+'\')" placeholder="Harga"></div></form>';
+    		cell5.innerHTML = '<h5 id = "keluaran'+counter+'"> </h5>';
+		}
+	</script>
+	<script>
+		function calculation(keluaran,input1,input2){
+			var jumlah = document.getElementById(input2).value; 
+			var harga = document.getElementById(input1).value;
+			var hasil = jumlah * harga;
+			document.getElementById(keluaran).innerHTML =  hasil;
+		}
+	</script>
 	<script src="bootstrap/js/jquery-1.11.3.min.js"></script>
 	<script src="bootstrap/js/bootstrap.min.js"></script>
 </html>
