@@ -23,7 +23,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="index.php">SILUTEL</a>
+					<a class="navbar-brand" href="#">SILUTEL</a>
 				</div>
 
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -136,7 +136,7 @@
 						} else {
 						  $startrow = (int)$_GET['startrow'];
 						}
-						$result = queryDB("SELECT * FROM silutel.inventori"." ".$By." ".$Ascdsc." "."LIMIT 5 OFFSET $startrow");
+						$result = queryDB("SELECT * FROM silutel.inventori"." ".$By." ".$Ascdsc." "."LIMIT 15 OFFSET $startrow");
 						$result2 = queryDB("SELECT * FROM silutel.inventori");
 						$length = pg_num_rows($result2);
 
