@@ -1,3 +1,9 @@
+@import url(//fonts.googleapis.com/css?family=Open+Sans);
+
+body {
+	font-family: 'Open Sans';
+}
+
 .pushdown {
 	margin-top: 70px;
 }
@@ -7,12 +13,12 @@
 }
 
 .navbar {
-	background-color: #1565c0;
+	background-color: #375e97;
 	border: none;
-	color: white;
+	color: #f6ea90;
 	font-weight: 600;
 }
 
 .navbar a {
-	color: white;
+	color: #f6ea90;
 }

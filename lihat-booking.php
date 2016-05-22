@@ -1,12 +1,13 @@
 <?php
 	require 'db/connect.php';
 
-	if (!isset($_GET["d"]) || !isset($_GET["s"]) || !isset($_GET["by"]) || !isset($_GET["p"])) {
-		$d = "2015";
+	if (!isset($_GET["s"]) || !isset($_GET["by"]) || !isset($_GET["p"])) {
+		//$dtime = queryDB("SELECT current_date;");
 		$sortby = "nomorinvoice";
 		$ascdesc = "desc";
 		$pagenum = 1;
 	} else {
+		// $dtime = htmlspecialchars($_GET["d"]);
 		$sortby = htmlspecialchars($_GET["s"]);
 		$ascdesc = htmlspecialchars($_GET["by"]);
 		$pagenum = htmlspecialchars($_GET["p"]);
@@ -30,14 +31,13 @@
 
 		<script src="js/jquery-1.12.2.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.js"></script>
+		<script src="js/script-pembelianinventori.js"></script>
+
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.css">
 	</head>
 
 	<body>
 
-	<script>
-			var current = new Date();
-			$( "#datepicker" ).datepicker({dateFormat:"yy/mm/dd"}).datepicker("setDate",new Date());
-		</script>
 		<nav class="navbar navbar-fixed-top">
 			<div class="container-fluid">
 				<div class="navbar-header">
@@ -47,7 +47,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="#">SILUTEL</a>
+					<a class="navbar-brand" href="index.php">SILUTEL</a>
 				</div>
 
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -69,9 +69,21 @@
 					<div class="row">
 						<h3 class="text-center">Lihat Booking</h3>
 
-						<div class = "row">
-				        <div class = "col-md-1">Tanggal:</div>
-				        <div class = "col-md-5"><input type="text" id="datepicker"></input></div>
+						<div class="row">
+			        <div class="col-md-1">Tanggal:</div>
+			        <div class="col-md-5">
+			        	<form method="get" name="form" action="">
+				        	<input type="text" name="datepicker" id="datepicker"></input>
+				        	<a href="<?php 
+				        		$cdateval = htmlspecialchars($_GET["datepicker"]);
+				        		echo "?d=" . $cdate .	"?s=" . "nomorinvoice" . "&by=" . $ascdesc . "&p=" . $pagenum;
+				        	?>">
+						    		<input type="submit">
+						    			<button type="button" class="btn btn-default">Goto</button>
+						    		</input>
+						    	</a>
+					    	</form>
+			        </div>
 						</div>
 						<br>
 						<div class="btn-group" role="group" aria-label="...">
@@ -134,11 +146,21 @@
 
 						<div class="text-center">
 							<ul class="pagination">
-							  <li class="active"><a href="#">1</a></li>
-							  <li><a href="#">2</a></li>
-							  <li><a href="#">3</a></li>
-							  <li><a href="#">4</a></li>
-							  <li><a href="#">5</a></li>
+								<?php
+									$count = (pg_fetch_row(queryDB("SELECT COUNT(*) FROM silutel.invoice"))[0]) / 15;
+
+									for ($j = 0; $j < $count; $j++) {
+										if ($pagenum-1 == $j) {
+											echo '<li class="active"><a href="' . 
+														"?s=" . $sortby . "&by=" . $ascdesc . "&p=" . ($j+1) .
+														'">' . ($j+1) . '</a></li>';
+										} else {
+											echo '<li><a href="' . 
+														"?s=" . $sortby . "&by=" . $ascdesc . "&p=" . ($j+1) .
+														'">' . ($j+1) . '</a></li>';
+										}
+									}
+								?>
 							</ul>
 						</div>
 

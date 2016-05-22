@@ -1,3 +1,7 @@
+<?php
+	require 'db/connect.php';
+?>
+
 <html>
 	<head>
 		<title>Ganti Inventori</title>
@@ -11,6 +15,26 @@
 		<link href='https://fonts.googleapis.com/css?family=Lato:400,700,300,900' rel='stylesheet' type='text/css'>
 		<link href='https://fonts.googleapis.com/css?family=Josefin+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+		<script>
+		function showMerk(str) {
+	    if (str == "") {
+	    	document.getElementById("form-merk").innerHTML = "";
+        return;
+	    } else {
+	        if (window.XMLHttpRequest) {
+	            xmlhttp = new XMLHttpRequest();
+	        }
+	        xmlhttp.onreadystatechange = function() {
+	            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+	                document.getElementById("form-merk").innerHTML = xmlhttp.responseText;
+	            }
+	        };
+	        xmlhttp.open("GET","db/ganti-inventori-merk.php?i=" + str,true);
+	        xmlhttp.send();
+		    }
+			}
+		</script>
 	</head>
 
 	<body>
@@ -23,7 +47,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="#">SILUTEL</a>
+					<a class="navbar-brand" href="index.php">SILUTEL</a>
 				</div>
 
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -47,20 +71,20 @@
 						<form role="form">
 						  <div class="form-group">
 						    <label>Nama Inventori</label>
-							  <select class="form-control">
-							    <option value="one">One</option>
-							    <option value="two">Two</option>
-							    <option value="three">Three</option>
-							    <option value="four">Four</option>
+							  <select class="form-control" id="form-nama" onchange="showMerk(this.value)">
+							  	<?php
+										$result = queryDB("SELECT nama FROM silutel.inventori ORDER BY nama asc");
+
+										while ($row = pg_fetch_row($result)) {
+											echo '<option value="' . $row[0] . '">' . $row[0] . '</option>';
+										}
+									?>
 								</select>
 						  </div>
 						  <div class="form-group">
 						    <label>Merk</label>
-							  <select class="form-control">
-							    <option value="one">One</option>
-							    <option value="two">Two</option>
-							    <option value="three">Three</option>
-							    <option value="four">Four</option>
+							  <select class="form-control" id="form-merk">
+
 								</select>
 						  </div>
 						  <div class="form-group">
