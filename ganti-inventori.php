@@ -1,3 +1,7 @@
+<?php
+	require 'db/connect.php';
+?>
+
 <html>
 	<head>
 		<title>Ganti Inventori</title>
@@ -48,19 +52,25 @@
 						  <div class="form-group">
 						    <label>Nama Inventori</label>
 							  <select class="form-control">
-							    <option value="one">One</option>
-							    <option value="two">Two</option>
-							    <option value="three">Three</option>
-							    <option value="four">Four</option>
+							  	<?php
+										$result = queryDB("SELECT nama FROM silutel.inventori ORDER BY nama asc");
+
+										while ($row = pg_fetch_row($result)) {
+											echo '<option value="' . $row[0] . '">' . $row[0] . '</option>';
+										}
+									?>
 								</select>
 						  </div>
 						  <div class="form-group">
 						    <label>Merk</label>
 							  <select class="form-control">
-							    <option value="one">One</option>
-							    <option value="two">Two</option>
-							    <option value="three">Three</option>
-							    <option value="four">Four</option>
+							  	<?php
+										$result = queryDB("SELECT merk FROM silutel.inventori ORDER BY merk asc");
+
+										while ($row = pg_fetch_row($result)) {
+											echo '<option value="' . $row[0] . '">' . $row[0] . '</option>';
+										}
+									?>
 								</select>
 						  </div>
 						  <div class="form-group">
