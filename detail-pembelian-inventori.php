@@ -1,3 +1,41 @@
+<?php
+    //check for login
+    
+    if(isset($_GET["nomornota"])) {
+        require 'db/connect.php';
+        
+        $query = sprintf("SELECT * FROM SILUTEL.PEMBELIAN, SILUTEL.USER WHERE nomornota = '%s' AND emailstaf = email",$_GET["nomornota"]);
+        
+        $details = queryDB($query);
+        
+        $detail_entry = pg_fetch_assoc($details);
+        
+        $query = sprintf("SELECT nama, merk, hargasatuan, jumlah, hargasatuan*jumlah AS total FROM SILUTEL.PEMBELIAN_INVENTORI WHERE nomornota = '%s'",$_GET["nomornota"]);
+        
+        $entries = queryDB($query);
+        
+        $table_entries = "";
+        $grand_total = 0;
+        while ($row = pg_fetch_row($entries)) {
+            $table_entries .= "<tr>";
+            $grand_total += $row[4];
+            foreach ($row as &$item) {
+                $table_entries .= "<td>$item</td>";
+            }
+            $table_entries .= "</tr>";
+        }
+    }
+    else {
+        $detail_entry = array();
+        $detail_entry["nomornota"] = "N/A";
+        $detail_entry["namasupplier"] = "N/A";
+        $detail_entry["waktu"] = "N/A";
+        $detail_entry["nama"] = "N/A";
+        $grand_total = 0;
+        $table_entries = "";
+    }
+?>
+
 <html>
 <head>
 	<title>Rincian Pembelian Inventori</title>
@@ -36,21 +74,21 @@
 		<h1 class="text-center">SILUTEL - RINCIAN PEMBELIAN INVENTORI</h3>
 			<div class="row">
 	    <div class="col-md-2">Nomor Nota:</div>
-	    <div class="col-md-1 text-right">XYZ999</div>
+	    <div class="col-md-1 text-right"><?php echo $detail_entry["nomornota"];?></div>
 	    <div class="col-md-1"></div>
 	    <div class="col-md-1">Total:</div>
-	    <div class="col-md-2 text-right">2,650,000</div>
+	    <div class="col-md-2 text-right"><?php echo $grand_total;?></div>
 	    </div>
 	    <div class="row">
 	    <div class="col-md-1">Waktu:</div>
-	    <div class="col-md-2 text-right">05/05/2016 08:05</div>
+	    <div class="col-md-2 text-right"><?php echo $detail_entry["waktu"];?></div>
 	    <div class="col-md-1"></div>
 	    <div class="col-md-1">Staf:</div>
-	    <div class="col-md-2 text-right">Po</div>
+	    <div class="col-md-2 text-right"><?php echo $detail_entry["nama"];?></div>
 	    </div>
 	    <div class="row">
 	    <div class="col-md-1">Supplier:</div>
-	    <div class="col-md-2 text-right">Good Life</div>
+	    <div class="col-md-2 text-right"><?php echo $detail_entry["namasupplier"];?></div>
 	    </div>
 		<br/>
 		<table id="datatable" border=1 class="table">
@@ -61,34 +99,9 @@
 				<th>Jumlah</th>
 				<th>Total</th>
 			</tr>
-			<tr>
-				<td>Pasta Gigi</td>
-				<td>ABC</td>
-				<td>10,000</td>
-				<td>50</td>
-				<td>500,000</td>
-			</tr>
-			<tr>
-				<td>Pasta Gigi</td>
-				<td>DEF</td>
-				<td>8,000</td>
-				<td>50</td>
-				<td>400,000</td>
-			</tr>
-			<tr>
-				<td>Shampoo</td>
-				<td>GHI</td>
-				<td>20,000</td>
-				<td>50</td>
-				<td>1,000,000</td>
-			</tr>
-			<tr>
-				<td>Shampoo</td>
-				<td>IJK</td>
-				<td>15,000</td>
-				<td>50</td>
-				<td>750,000</td>
-			</tr>
+            <?php
+                echo $table_entries;
+            ?>
 		</table>
 		</div>
 	</div>

@@ -1,8 +1,11 @@
+<?php
+    //check for login
+?>
 <html>
 <head>
 	<title>Pembelian Inventori</title>
 	<script src="js/jquery-1.12.2.min.js"></script>
-	<script src="js/script.js"></script>
+	<script src="js/script-pembelianinventori.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="css/theme.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.css">
@@ -35,7 +38,7 @@
 
 	<div class="row">
 		<div class="col-md-10 col-md-offset-1">
-		<h1 class="text-center pushdown">SILUTEL - PEMBELIAN INVENTORI</h1>
+		<h1 class="text-center pushdown">PEMBELIAN INVENTORI</h1>
     <div class = "row">
         <div class = "col-md-1">Tanggal:</div>
         <div class = "col-md-5"><input type="text" id="datepicker"></input></div>
@@ -49,20 +52,20 @@
 -->
     <div class="btn-group" role="group" aria-label="...">
         <div class="btn-group" role="group">
-            <button type="button" class="btn btn-default">Waktu</button>
+            <button type="button" class="btn btn-default" id="sortwaktu">Waktu</button>
         </div>
         <div class="btn-group" role="group">
-            <button type="button" class="btn btn-default">Nomor Nota</button>
+            <button type="button" class="btn btn-default" id="sortnomor">Nomor Nota</button>
         </div>
         <div class="btn-group" role="group">
-            <button type="button" class="btn btn-default">Supplier</button>
+            <button type="button" class="btn btn-default" id="sortsupplier">Supplier</button>
         </div>
         <div class="btn-group" role="group">
-            <button type="button" class="btn btn-default">Staf</button>
+            <button type="button" class="btn btn-default" id="sortstaf">Staf</button>
         </div>
     </div>
 
-    <button type="button" class="btn btn-default btn-ascdesc pull-right">Asc/Desc</button>
+    <button type="button" class="btn btn-default btn-ascdesc pull-right" id="toggleasc">Asc/Desc</button>
     
 	<table id="datatable" border=1 class="table">
 	<tr>
