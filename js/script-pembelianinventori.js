@@ -66,7 +66,7 @@ function loadtable() {
     });
     
     
-	
+	$("#tableselector").empty();
     $("#tableselector").append("<div class='col-md-1' onclick=showtable(" + 1 + ")>" + 1 + "</div>");
     
 	for(var i=1;i<data.length/15;i++) {

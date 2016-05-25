@@ -71,7 +71,7 @@
 	<div class="row pushdown">
 
 		<div class="col-md-10 col-md-offset-1">
-		<h1 class="text-center">SILUTEL - RINCIAN PEMBELIAN INVENTORI</h3>
+		<h1 class="text-center">RINCIAN PEMBELIAN INVENTORI</h3>
 			<div class="row">
 	    <div class="col-md-2">Nomor Nota:</div>
 	    <div class="col-md-1 text-right"><?php echo $detail_entry["nomornota"];?></div>

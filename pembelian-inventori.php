@@ -38,7 +38,7 @@
 
 	<div class="row">
 		<div class="col-md-10 col-md-offset-1">
-		<h1 class="text-center pushdown">PEMBELIAN INVENTORI</h1>
+		<h1 class="text-center pushdown">DAFTAR PEMBELIAN INVENTORI</h1>
     <div class = "row">
         <div class = "col-md-1">Tanggal:</div>
         <div class = "col-md-5"><input type="text" id="datepicker"></input></div>
