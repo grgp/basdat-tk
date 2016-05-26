@@ -15,6 +15,7 @@
 				$user = $_SESSION["userlogin"];
 				$result = queryDB("SELECT * FROM silutel.user WHERE Email='$user'");
 				$row = pg_fetch_row($result);
+				$_SESSION["useremail"] = $row[0];
 				$_SESSION["role"] = $row[4];
 				pindahPage($_SESSION["role"]);
 			}else{
