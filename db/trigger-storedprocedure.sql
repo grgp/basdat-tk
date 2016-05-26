@@ -162,21 +162,21 @@ CREATE OR REPLACE FUNCTION hitung_staf_mengganti_inventori() RETURNS trigger AS 
 BEGIN
 
 IF (TG_OP = 'INSERT')
-THEN UPDATE INVENTORI SET stok = stok - NEW.jumlah
+THEN UPDATE SILUTEL.INVENTORI SET stok = stok - NEW.jumlah
 WHERE     nama = NEW.nama AND
         merk = NEW.merk;
 
 ELSEIF (TG_OP = 'DELETE')
-THEN UPDATE INVENTORI SET stok = stok + NEW.jumlah
+THEN UPDATE SILUTEL.INVENTORI SET stok = stok + NEW.jumlah
 WHERE     nama = OLD.nama AND
         merk = OLD.merk;
 
 ELSEIF (TG_OP = 'UPDATE')
-THEN UPDATE INVENTORI SET stok = stok - NEW.jumlah
+THEN UPDATE SILUTEL.INVENTORI SET stok = stok - NEW.jumlah
 WHERE    nama = NEW.nama AND
         merk = NEW.merk;
 
-UPDATE INVENTORI SET stok = stok + NEW.jumlah
+UPDATE SILUTEL.INVENTORI SET stok = stok + NEW.jumlah
 WHERE     nama = OLD.nama AND
         merk = OLD.merk;
 END IF;

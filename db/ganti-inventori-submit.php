@@ -21,6 +21,8 @@
 
 	$result = queryDB("INSERT INTO SILUTEL.STAF_MENGGANTI_INVENTORI VALUES ('$gantinama', '$gantimerk', '$gantiemail', 'now()', '$gantijumlah', '$gantialasan')");
 
+	header("Location: ../ganti-inventori.php");
+
 /*
 	insert into silutel.staf_mengganti_inventori values ('')
 */
