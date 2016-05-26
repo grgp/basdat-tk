@@ -53,7 +53,6 @@
 	<title>Rincian Pembelian Inventori</title>
   <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="css/theme.css">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.js"></script>
 </head>
 <body style="margin:10;">
 	<nav class="navbar navbar-fixed-top">
