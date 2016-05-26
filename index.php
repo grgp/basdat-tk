@@ -47,16 +47,22 @@
 		
 			<div class="panel" style="margin:auto;margin-top:150px;width:35%;opacity:.97">
 				<div class="panel-heading" style="text-align:center"><h4>Home</h4></div>
-
+                <div class="panel-heading" style="text-align:center">
+                <?php
+                    echo 'Hello, ';
+                    echo $_SESSION["name"];
+                ?>
+                </div>
 				<div class="panel-body">
 					<ul class="" style="list-style-type: none; font-size: 16px; line-height: 28px;">
-						<li><a href="beli-inventori.php">Beli Inventori</a></li>
-						<li><a href="detail-pembelian-inventori.php">Detail Pembelian Inventori</a></li>
-						<li><a href="ganti-inventori.php">Ganti Inventori</a></li>
-						<li><a href="lihat-booking.php">Lihat Booking</a></li>
-						<li><a href="lihat-laundry.php">Lihat Laundry</a></li>
-						<li><a href="pembelian-inventori.php">Pembelian Inventori</a></li>
-						<li><a href="rincian-inventori.php">Rincian Inventori</a></li>
+						<?php
+                        if($_SESSION["role"] == "IN") echo '<li><a href="beli-inventori.php">Beli Inventori</a></li>';
+						if($_SESSION["role"] == "IN") echo '<li><a href="ganti-inventori.php">Ganti Inventori</a></li>';
+						if($_SESSION["role"] == "MG") echo '<li><a href="lihat-booking.php">Lihat Booking</a></li>';
+						if($_SESSION["role"] == "MG" || $_SESSION["role"] == "LA") echo '<li><a href="lihat-laundry.php">Lihat Laundry</a></li>';
+						if($_SESSION["role"] == "MG" || $_SESSION["role"] == "IN") echo '<li><a href="pembelian-inventori.php">Daftar Pembelian Inventori</a></li>';
+						//<li><a href="rincian-inventori.php">Rincian Inventori</a></li>
+                        ?>
 					</ul>
 				</div>
 			</div>
