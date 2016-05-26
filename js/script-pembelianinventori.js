@@ -1,5 +1,6 @@
 var data;
 var current_ordering = 1;
+var currentIndex = 0;
 var order_by = "nomornota";
 
 const TABLEHEADER = "<tr><th>Nomor Nota</th><th>Waktu</th><th>Supplier</th><th>Staf</th><th></th></tr>";
@@ -60,26 +61,25 @@ function loadtable() {
         dataType: "json",
         success: function(result) {
             data = result;
-            console.log(data);
+            $("#tableselector").empty();
+            $("#tableselector").append("<div class='col-md-1' onclick=showtable(" + 0 + ")>" + 1 + "</div>");
+            
+            for(var i=1;i<data.length/15;i++) {
+                $("#tableselector").append("<a class='col-md-1' onclick=showtable(" + i + ")>" + (i+1) + "</a>");
+            }
             showtable(0);
         }
     });
-    
-    
-	$("#tableselector").empty();
-    $("#tableselector").append("<div class='col-md-1' onclick=showtable(" + 1 + ")>" + 1 + "</div>");
-    
-	for(var i=1;i<data.length/15;i++) {
-		$("#tableselector").append("<a class='col-md-1' onclick=showtable(" + (i+1) + ")>" + (i+1) + "</a>");
-	}
 	
 }
 
 function showtable(index) {
     
+    currentIndex = index;
+    
     if(order_by == "nomornota") data.sort(comparenumber);
     if(order_by == "waktu") data.sort(comparetime);
-    if(order_by == "supploer") data.sort(comparesupplier);
+    if(order_by == "supplier") data.sort(comparesupplier);
     if(order_by == "staf") data.sort(comparestaf);
     
 	$("#datatable").empty();
