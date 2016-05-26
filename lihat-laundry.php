@@ -147,9 +147,12 @@
 							if($_GET["date"]) {
 								$Date = "AND DATE(waktu) = '" . DATE($_GET["date"] . "' ");
 								$Date2 = DATE($_GET["date"]);
+								//$Date3 = "DATE(waktu) = '" . DATE($_GET["date"] . "' ");
 							}
 						} else {
-							$Date = " ";
+							$Date = " AND DATE(waktu) = CURRENT_DATE ";
+							$Date2 = "";
+							//$Date3 = "DATE(waktu) = CURRENT_DATE ";
 						}
 
 
