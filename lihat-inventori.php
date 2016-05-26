@@ -107,8 +107,8 @@
 						require 'db/connect.php';
 
 
-						$By = '';
-						$By2 = '';
+						$By = 'ORDER BY nama';
+						$By2 = 'nama';
 						if(isset($_GET["by"])) {
 							switch($_GET["by"]) {
 								case "nama":
@@ -148,7 +148,7 @@
 						  echo "</tr>";
 						}
 								
-						$prev = $startrow - 5;
+						$prev = $startrow - 15;
 						?>
 					</tbody>
 				</table>
@@ -159,9 +159,9 @@
    						echo '<a class="btn btn-default" href="'.$_SERVER['PHP_SELF'].'?startrow='.$prev.'">Previous</a>';
    						echo '</div>';
    					}
-   					if ($startrow < $length-5 && !isset($_GET["ascdsc"]) && !isset($_GET["by"])){
+   					if ($startrow < $length-15 && !isset($_GET["ascdsc"]) && !isset($_GET["by"])){
    						echo '<div class="col-md-1">';
-   						echo '<a class="btn btn-default" href="'.$_SERVER['PHP_SELF'].'?startrow='.($startrow+5).'">Next</a>';
+   						echo '<a class="btn btn-default" href="'.$_SERVER['PHP_SELF'].'?startrow='.($startrow+15).'">Next</a>';
    						echo '</div>';
    					}
    					if ($prev >= 0 && isset($_GET["ascdsc"]) && isset($_GET["by"])){
@@ -169,13 +169,13 @@
    						echo '<a class="btn btn-default" href="'.$_SERVER['PHP_SELF'].'?by='.$By2.'&ascdsc='.$Ascdsc.'&startrow='.$prev.'">Previous</a>';
    						echo '</div>';
    					}
-   					if ($startrow < $length-5 && isset($_GET["ascdsc"]) && isset($_GET["by"])){
+   					if ($startrow < $length-15 && isset($_GET["ascdsc"]) && isset($_GET["by"])){
    						echo '<div class="col-md-1">';
-   						echo '<a class="btn btn-default" href="'.$_SERVER['PHP_SELF'].'?by='.$By2.'&ascdsc='.$Ascdsc.'&startrow='.($startrow+5).'">Next</a>';
+   						echo '<a class="btn btn-default" href="'.$_SERVER['PHP_SELF'].'?by='.$By2.'&ascdsc='.$Ascdsc.'&startrow='.($startrow+15).'">Next</a>';
    						echo '</div>';
    					}
 					echo '</div>';
-					?>
+				?>
 			</div>
 		</div>
 	</body>
