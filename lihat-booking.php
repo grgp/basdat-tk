@@ -85,13 +85,11 @@
 
 										if (!isset($_GET["d"]) || !isset($_GET["s"]) || !isset($_GET["by"]) || !isset($_GET["p"])) {
 											$cdateval = date('Y-m-d');
-											// $cdateval = "ababa";
 											$sortby = "nomorinvoice";
 											$ascdesc = "desc";
 											$pagenum = 1;
 										} else {
 											$cdateval = $_GET["d"];
-											// $cdateval = "sdsd";
 											$sortby = htmlspecialchars($_GET["s"]);
 											$ascdesc = htmlspecialchars($_GET["by"]);
 											$pagenum = htmlspecialchars($_GET["p"]);
@@ -104,14 +102,17 @@
 									<input type="submit" value="Pick Date">
 									<a href="<?php 
 									if (isset($_POST["datepicker"])) {
-			        			$cdateval = ($_POST["datepicker"]);
+			        			$cdateval2 = ($_POST["datepicker"]);
 			        		} else {
 			        		}
-			        		$redir = "?d=" . $cdateval .	"&s=" . $sortby . "&by=" . $ascdesc . "&p=" . $pagenum;
+			        		$redir = "?d=" . $cdateval2 .	"&s=" . $sortby . "&by=" . $ascdesc . "&p=" . $pagenum;
 			        		echo $redir;
 			        		?>">Goto</a>
 									</button>
 					    	</form>
+					    	<script>$('#datepicker').datepicker({ dateFormat: 'yy/mm/dd'}).datepicker("setDate", new Date(
+					    		<?php echo $cdateval;?>
+					    		));</script>
 					    		
 			        </div>
 						</div>
@@ -151,7 +152,7 @@
 								<th>Nama Tamu</th>
 							</tr>
 							<?php
-								$result = queryDB("SELECT * FROM silutel.invoice WHERE tanggaldatang>='$cdateval' AND tanggaldatang<current_date+1 ORDER BY $sortby $ascdesc LIMIT 15 OFFSET $offset");
+								$result = queryDB("SELECT * FROM silutel.invoice WHERE tanggaldatang>='$cdateval' AND tanggaldatang< date '$cdateval' +1 ORDER BY $sortby $ascdesc LIMIT 15 OFFSET $offset");
 							// $result = queryDB("SELECT * FROM silutel.invoice ORDER BY $sortby $ascdesc LIMIT 15 OFFSET $offset");
 
 								while ($row = pg_fetch_row($result)) {
@@ -178,8 +179,9 @@
 
 						<div class="text-center">
 							<ul class="pagination">
+
 								<?php
-									$count = (pg_fetch_row(queryDB("SELECT COUNT(*) FROM silutel.invoice"))[0]) / 15;
+									$count = (pg_fetch_row(queryDB("SELECT * FROM silutel.invoice WHERE tanggaldatang>='$cdateval' AND tanggaldatang< date '$cdateval' +1"))[0]) / 15;
 
 									for ($j = 0; $j < $count; $j++) {
 										if ($pagenum-1 == $j) {
