@@ -1,3 +1,18 @@
+<?php
+
+  session_start();
+  
+  if(!isset($_SESSION["userlogin"])){
+      header("Location: login.php");
+  }
+  else {
+      if($_SESSION["role"] != "MG" && $_SESSION["role"] != "IN") {
+          header("Location: lihat-laundry.php"); //anggap ke home
+      }
+  }
+
+?>
+
 <!DOCTYPE html>
 
 <html>
@@ -7,7 +22,7 @@
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="css/theme.css">
 		<link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
-	
+		
 	</head>
 	
 	<body style='background-image: url("burj.jpg") !important;'>	

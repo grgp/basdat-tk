@@ -1,4 +1,15 @@
 <?php
+  session_start();
+  
+  if(!isset($_SESSION["userlogin"])){
+      header("Location: login.php");
+  }
+  else {
+      if($_SESSION["role"] != "MG" && $_SESSION["role"] != "IN") {
+          header("Location: lihat-laundry.php"); //anggap ke home
+      }
+  }
+
 	require 'db/connect.php';
 ?>
 
@@ -68,13 +79,13 @@
 					<div class="row">
 						<h3 class="text-center">Ganti Inventori</h3>
 
-						<form role="form">
+						<form role="form" action="db/ganti-inventori-submit.php" method="post">
 						  <div class="form-group">
 						    <label>Nama Inventori</label>
-							  <select class="form-control" id="form-nama" onchange="showMerk(this.value)">
+							  <select name="gantinama" class="form-control" id="form-nama" onchange="showMerk(this.value)">
 							  	<?php
 										$result = queryDB("SELECT nama FROM silutel.inventori ORDER BY nama asc");
-
+											echo '<option value=""></option>';
 										while ($row = pg_fetch_row($result)) {
 											echo '<option value="' . $row[0] . '">' . $row[0] . '</option>';
 										}
@@ -83,17 +94,17 @@
 						  </div>
 						  <div class="form-group">
 						    <label>Merk</label>
-							  <select class="form-control" id="form-merk">
+							  <select name="gantimerk" class="form-control" id="form-merk">
 
 								</select>
 						  </div>
 						  <div class="form-group">
 						    <label>Jumlah</label>
-						    <input type="text" class="form-control">
+						    <input name="gantijumlah" type="text" class="form-control">
 						  </div>
 						  <div class="form-group">
 							  <label for="comment">Comment:</label>
-							  <textarea class="form-control" rows="5" id="comment"></textarea>
+							  <textarea name="gantialasan" class="form-control" rows="5" id="comment"></textarea>
 							</div>
 						  <button type="submit" class="btn btn-default">Submit</button>
 						</form>
