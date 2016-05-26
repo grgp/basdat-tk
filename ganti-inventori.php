@@ -103,7 +103,7 @@
 						    <input name="gantijumlah" type="text" class="form-control">
 						  </div>
 						  <div class="form-group">
-							  <label for="comment">Comment:</label>
+							  <label for="comment">Alasan:</label>
 							  <textarea name="gantialasan" class="form-control" rows="5" id="comment"></textarea>
 							</div>
 						  <button type="submit" class="btn btn-default">Submit</button>
