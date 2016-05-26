@@ -27,7 +27,7 @@
 	}
 	
 	function checkUsername($user){
-		$result = queryDB("SELECT * FROM silutel.USER U WHERE U.Email ='$user' ");
+		$result = queryDB("SELECT * FROM silutel.USER WHERE Email ='$user'");
 		
 		if(pg_num_rows($result) > 0) {
 			pg_close();
