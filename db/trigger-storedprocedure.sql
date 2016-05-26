@@ -1,11 +1,30 @@
 --1. Pada table INVOICE terdapat kolom ‘Discount’ dan ‘Total’. Nilai kolom ‘Discount’ diupdate bila sudah tercatat data tamu lebih dari 10x pada table INVOICE dan nilai ‘Total’ diupdate berdasarkan harga dari semua kamar yang dipesan setelah dikalikan diskon. 
 
+CREATE OR REPLACE FUNCTION fill_discount() RETURNS TRIGGER AS
+$$
+    BEGIN
+        IF (TG_OP = 'INSERT') THEN
+            IF (SELECT COUNT(*) FROM SILUTEL.INVOICE WHERE idtamu = NEW.idtamu) >= 10 THEN
+                NEW.total = (SELECT SUM(harga)
+                                FROM invoice_kamar n, kamar k, tipe_kamar t 
+                                WHERE n.nomorinvoice = NEW.nomorinvoice AND n.nomorkamar = k.nomor 
+                                AND n.lantaikamar = k.lantai AND k.namatipekamar = t.nama);
+                NEW.discount = 10;
+            END IF;
+        END IF;
+        IF (TG_OP = 'UPDATE') THEN
+            NEW.total = NEW.total - NEW.total*(NEW.discount/100);
+        RETURN NEW;
+    END;
+$$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER diskondiskon BEFORE INSERT OR UPDATE ON silutel.invoice FOR EACH ROW EXECUTE PROCEDURE fill_discount();
+
 CREATE OR REPLACE FUNCTION hitung_total_invoice()
 RETURNS TRIGGER AS
 $$
-  DECLARE
-    row RECORD;
-  BEGIN
+BEGIN
   IF (TG_OP = 'INSERT') THEN
     UPDATE silutel.invoice SET total =
     (SELECT SUM(harga)
@@ -13,13 +32,6 @@ $$
     WHERE n.nomorinvoice = NEW.nomorinvoice AND n.nomorkamar = k.nomor 
           AND n.lantaikamar = k.lantai AND k.namatipekamar = t.nama)
     WHERE nomorinvoice = NEW.nomorinvoice;
-    
-    FOR row IN
-        SELECT nomorinvoice FROM silutel.invoice WHERE idtamu = NEW.idtamu OFFSET 10
-    LOOP
-        UPDATE silutel.invoice SET diskon = total / 10 WHERE nomorinvoice = row.nomorinvoice;
-        UPDATE silutel.invoice SET total = total - diskon WHERE nomorinvoice = row.nomorinvoice;
-    END LOOP;
 
   ELSEIF (TG_OP = 'DELETE') THEN
     UPDATE silutel.invoice SET total =
@@ -28,13 +40,6 @@ $$
     WHERE n.nomorinvoice = OLD.nomorinvoice AND n.nomorkamar = k.nomor 
           AND n.lantaikamar = k.lantai AND k.namatipekamar = t.nama)
     WHERE nomorinvoice = OLD.nomorinvoice;
-
-    FOR row IN
-        SELECT nomorinvoice FROM silutel.invoice WHERE idtamu = OLD.idtamu OFFSET 10
-    LOOP
-        UPDATE silutel.invoice SET diskon = total / 10 WHERE nomorinvoice = row.nomorinvoice;
-        UPDATE silutel.invoice SET total = total - diskon WHERE nomorinvoice = row.nomorinvoice;
-    END LOOP;
 
   ELSEIF (TG_OP = 'UPDATE') THEN
     UPDATE silutel.invoice SET total =
@@ -51,23 +56,9 @@ $$
           AND n.lantaikamar = k.lantai AND k.namatipekamar = t.nama)
     WHERE nomorinvoice = OLD.nomorinvoice;
     
-    FOR row IN
-        SELECT nomorinvoice FROM silutel.invoice WHERE idtamu = NEW.idtamu OFFSET 10
-    LOOP
-        UPDATE silutel.invoice SET diskon = total / 10 WHERE nomorinvoice = row.nomorinvoice;
-        UPDATE silutel.invoice SET total = total - diskon WHERE nomorinvoice = row.nomorinvoice;
-    END LOOP;
-        
-    FOR row IN
-        SELECT nomorinvoice FROM silutel.invoice WHERE idtamu = OLD.idtamu OFFSET 10
-    LOOP
-        UPDATE silutel.invoice SET diskon = total / 10 WHERE nomorinvoice = row.nomorinvoice;
-        UPDATE silutel.invoice SET total = total - diskon WHERE nomorinvoice = row.nomorinvoice;
-    END LOOP;
-
   END IF;
   RETURN NEW;
-  END;
+END;
 $$
 LANGUAGE plpgsql;
 
