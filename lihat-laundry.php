@@ -7,10 +7,7 @@
 		<title>Lihat Laundry</title>
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="css/theme.css">
-		<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
-		<script> 
-		$('.datepicker').pickadate()
-		</script>	
+		<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>	
 	</head>
 	<body>
 		<nav class="navbar navbar-fixed-top">
@@ -22,7 +19,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="index.php">SILUTEL</a>
+					<a class="navbar-brand" href="#">SILUTEL</a>
 				</div>
 
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -40,26 +37,97 @@
 		<div class="container pushdown">
 			<div class="col-md-10 col-md-offset-1">
 				<table class="table table-hover">
-					<h1 style="text-align:center">SILUTEL - LAUNDRY</h1>
-					<form action="action_page.php">
-  					<input type="date" name="bday" style="float: left";>
-					</form>
-	    <div class="btn-group" role="group" aria-label="..." style="margin-left: 10px;">
-        <div class="btn-group" role="group">
-            <button type="button" class="btn btn-default">Nama</button>
-        </div>
-        <div class="btn-group" role="group">
-            <button type="button" class="btn btn-default">Merk</button>
-        </div>
-        <div class="btn-group" role="group">
-            <button type="button" class="btn btn-default">Staf</button>
-        </div>
-        <div class="btn-group" role="group">
-            <button type="button" class="btn btn-default">Waktu</button>
-        </div>
-    </div>
+					<h1 style="text-align:center">LAUNDRY</h1>
+					<form method="GET" action="lihat-laundry.php">
+			<div class="row">
+				<div class="btn-group" role="group" aria-label="..." style="margin-left: 10px;">
+					<?php
+						$fillDate = 'data-value="' . date("Y-m-d") . '"';
+						if(isset($_GET["date"])) {
+							$fillDate = 'data-value="' . $_GET["date"] . '"';
+						}
+					?>
+					<input type="date" class="datepicker" name="date" <?php echo $fillDate; ?>><br><br>
+					<div class="col-md-11">
+					    <div class="btn-group" role="group">
+				            <h4> Urutkan Berdasarkan :</h4>
+				        </div>
+				        <div class="btn-group" role="group">
+				        	<?php
+							$fillByNama = '';
+							$fillByStaf = '';
+							$fillByMerk = '';
+							$fillByWaktu = '';
+							$fillByJumlah = '';
+							$fillByHarga = '';
+							$fillByTotal = '';
+							$fillByTanggalAmbil = '';
 
-    <button type="button" class="btn btn-default btn-ascdesc pull-right">Asc/Desc</button>
+							if(isset($_GET["by"])) {
+								switch($_GET["by"]) {
+									case "nama":
+										$fillByNama = 'selected';
+										break;
+									case "staf":
+										$fillByStaf = 'selected';
+										break;
+									case "waktu":
+										$fillByWaktu = 'selected';
+										break;
+									case "jumlah":
+										$fillByJumlah = 'selected';
+										break;
+									case "hargasatuan":
+										$fillByHarga = 'selected';
+										break;
+									case "total":
+										$fillByTotal = 'selected';
+										break;
+									case "anggaran":
+										$fillByAnggaran = 'selected';
+										break;
+									case "tanggalambil":
+										$fillByTanggalAmbil = 'selected';
+										break;
+								}
+							}
+							?>
+					        <select name="by" class="form-control" id="sel1">
+						        <option value="nama" <?php echo $fillByNama; ?>>Nama</option>
+						        <option value="merk" <?php echo $fillByMerk; ?>>Merk</option>
+						        <option value="staf" <?php echo $fillByStaf; ?>>Staf</option>
+						        <option value="waktu" <?php echo $fillByWaktu; ?>>Waktu</option>
+						        <option value="jumlah" <?php echo $fillByJumlah; ?>>Jumlah</option>
+						        <option value="hargasatuan" <?php echo $fillByHarga; ?>>Harga</option>
+						        <option value="total" <?php echo $fillByTotal; ?>>Total</option>
+						        <option value="tanggalambil" <?php echo $fillByTanggalAmbil; ?>>Tanggal Ambil</option>
+					    	</select>
+				    	</div>
+				    	<div class="btn-group" role="group">
+				    		<?php
+								$fillAscdscAsc = '';
+								$fillAscdscDsc = '';
+								if(isset($_GET["ascdsc"])) {
+									$_GET["ascdsc"] == 'asc' ? $fillAscdscAsc = 'selected' : $fillAscdscDsc = 'selected';
+								}
+							?>
+					        <select name="ascdsc" class="form-control" id="sel1">
+						        <option value="asc" <?php echo $fillAscdscAsc ?>>Asc</option>
+						        <option value="dsc" <?php echo $fillAscdscDsc ?>>Desc</option>
+					        </select>
+				    	</div>
+					</div>
+					    <div class="col-md-1">
+					    	<div class="btn-group" role="group">
+					    		<button class="btn btn-default" type="submit">Urutkan</button>
+					    	</div>
+				   		</div>
+				</div>
+	    	</div>
+    	</form>
+		
+		    </div>
+    </div>
 					<tr class="active pushabit" >
 					  <th>Nama</th>
 					  <th>Merk</th>
@@ -71,38 +139,126 @@
 					  <th>Tanggal Ambil</th>
 					</tr>
 					<tbody>
-					<tr>
-					  <td>Handuk</td>
-					  <td>ABC</td>
-					  <td>Winnie</td>
-					  <td>05/05/2016 11:32</td>
-					  <td>15</td>
-					  <td>5,000</td>
-					  <td>75,000</td>
-					  <td>06/05/2016 12:34</td>
-					</tr>
-					<tr>
-					  <td>Handuk</td>
-					  <td>BCD</td>
-					  <td>Dipsy</td>
-					  <td>05/05/2016 10:45</td>
-					  <td>10</td>
-					  <td>5,000</td>
-					  <td>50,000</td>
-					  <td>06/05/2016 12:22</td>
-					</tr>
-					<tr>
-					  <td>Selimut</td>
-					  <td>CDE</td>
-					  <td>Lala</td>
-					  <td>05/05/2016 11:03</td>
-					  <td>15</td>
-					  <td>10,000</td>
-					  <td>150,000</td>
-					  <td>06/05/2016 12:55</td>
-					</tr>
+					<?php
+						require 'db/connect.php';
+
+						$Date = '';
+						if(isset($_GET["date"])) {
+							if($_GET["date"]) {
+								$Date = "AND DATE(waktu) = '" . DATE($_GET["date"] . "' ");
+								$Date2 = DATE($_GET["date"]);
+								//$Date3 = "DATE(waktu) = '" . DATE($_GET["date"] . "' ");
+							}
+						} else {
+							$Date = " AND DATE(waktu) = CURRENT_DATE ";
+							$Date2 = "";
+							//$Date3 = "DATE(waktu) = CURRENT_DATE ";
+						}
+
+
+						$By = 'ORDER BY A.nama';
+						$By2 = 'A.nama';
+						if(isset($_GET["by"])) {
+							switch($_GET["by"]) {
+								case "nama":
+									$By = 'ORDER BY A.nama';
+									$By2 = 'nama';
+									break;
+								case "merk":
+									$By = 'ORDER BY merk';
+									$By2 = 'merk';
+									break;
+								case "staf":
+									$By = 'ORDER BY B.nama';
+									$By2 = 'staf';
+									break;
+								case "waktu":
+									$By = 'ORDER BY waktu';
+									$By2 = 'waktu';
+									break;
+								case "jumlah":
+									$By = 'ORDER BY jumlah';
+									$By2 = 'jumlah';
+									break;
+								case "hargasatuan":
+									$By = 'ORDER BY hargasatuan';
+									$By2 = 'hargasatuan';
+									break;
+								case "total":
+									$By = 'ORDER BY jumlah*hargasatuan';
+									$By2 = 'total';
+									break;
+								case "tanggalambil":
+									$By = 'ORDER BY tanggalambil';
+									$By2 = 'tanggalambil';
+									break;
+							}
+						}
+
+
+						$Ascdsc = '';
+						if(isset($_GET["ascdsc"])) {
+							$_GET["ascdsc"] === 'asc' ? $Ascdsc = 'asc' : $Ascdsc = 'desc';
+						}
+						
+						if (!isset($_GET['startrow']) or !is_numeric($_GET['startrow'])) {
+						  $startrow = 0;
+						} else {
+						  $startrow = (int)$_GET['startrow'];
+						}
+						$result = queryDB("SELECT A.nama, merk, B.nama, waktu, jumlah, hargasatuan, jumlah*hargasatuan, tanggalambil FROM silutel.laundry_inventori A, 
+							silutel.user B WHERE emailstaf = email ".$Date.$By." ".$Ascdsc." "."LIMIT 15 OFFSET $startrow");
+						$result2 = queryDB("SELECT * FROM silutel.laundry_inventori");
+
+						$length = pg_num_rows($result2);
+
+						while ($row = pg_fetch_row($result)) {
+							echo "<tr>";
+						  foreach ($row as &$item) {
+						  	echo "<td>$item</td>";
+							}
+						  echo "</tr>";
+						}
+								
+						$prev = $startrow - 15;
+					?>
+
 					</tbody>
 				</table>
+				<?php 
+					echo '<div class="row">';
+					if ($prev >= 0 && !isset($_GET["ascdsc"]) && !isset($_GET["by"])) {
+						echo '<div class="col-md-11">';
+   						echo '<a class="btn btn-default" href="'.$_SERVER['PHP_SELF'].'?startrow='.$prev.'">Previous</a>';
+   						echo '</div>';
+   					}
+   					else if ($startrow < $length-15 && !isset($_GET["ascdsc"]) && !isset($_GET["by"])){
+   						echo '<div class="col-md-1">';
+   						echo '<a class="btn btn-default" href="'.$_SERVER['PHP_SELF'].'?startrow='.($startrow+15).'">Next</a>';
+   						echo '</div>';
+   					}
+   					else if ($prev >= 0 && isset($_GET["ascdsc"]) && isset($_GET["by"])){
+						echo '<div class="col-md-11">';
+   						echo '<a class="btn btn-default" href="'.$_SERVER['PHP_SELF'].'?by='.$By2.'&ascdsc='.$Ascdsc.'&startrow='.$prev.'">Previous</a>';
+   						echo '</div>';
+   					}
+   					else if ($startrow < $length-15 && isset($_GET["ascdsc"]) && isset($_GET["by"])){
+   						echo '<div class="col-md-1">';
+   						echo '<a class="btn btn-default" href="'.$_SERVER['PHP_SELF'].'?by='.$By2.'&ascdsc='.$Ascdsc.'&startrow='.($startrow+15).'">Next</a>';
+   						echo '</div>';
+   					}
+   					else if ($prev >= 0 && isset($_GET["ascdsc"]) && isset($_GET["by"]) && isset($_GET["date"])){
+						echo '<div class="col-md-11">';
+   						echo '<a class="btn btn-default" href="'.$_SERVER['PHP_SELF'].'?date='.$Date2.'&by='.$By2.'&ascdsc='.$Ascdsc.'&startrow='.$prev.'">Previous</a>';
+   						echo '</div>';
+   					}
+   					else if ($startrow < $length-15 && isset($_GET["ascdsc"]) && isset($_GET["by"]) && isset($_GET["date"])){
+   						echo '<div class="col-md-1">';
+   						echo '<a class="btn btn-default" href="'.$_SERVER['PHP_SELF'].'?date='.$Date2.'&by='.$By2.'&ascdsc='.$Ascdsc.'&startrow='.($startrow+15).'">Next</a>';
+   						echo '</div>';
+   					}
+					echo '</div>';
+				?>
 			</div>
 		</div>
 	</body>

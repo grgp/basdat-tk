@@ -9,23 +9,15 @@
           header("Location: lihat-laundry.php"); //anggap ke home
       }
   }
-  
-	require 'db/connect.php';
 
-	if (!isset($_GET["s"]) || !isset($_GET["by"]) || !isset($_GET["p"])) {
-		//$dtime = queryDB("SELECT current_date;");
-		$sortby = "nomorinvoice";
-		$ascdesc = "desc";
-		$pagenum = 1;
-	} else {
-		// $dtime = htmlspecialchars($_GET["d"]);
-		$sortby = htmlspecialchars($_GET["s"]);
-		$ascdesc = htmlspecialchars($_GET["by"]);
-		$pagenum = htmlspecialchars($_GET["p"]);
-	}
-
-	$offset = ($pagenum - 1) * 15;
 ?>
+<script>
+	function initdate(x) {
+		var $datepicker = $('#datepicker');
+		$datepicker.datepicker();
+		$datepicker.datepicker('setDate', x);
+	}
+</script>
 
 <html>
 	<head>
@@ -73,6 +65,8 @@
 			</div>
 		</nav>
 
+
+
 		<div class="container pushdown">
 			<div class="row">
 				<div class="col-md-8 col-md-offset-2">
@@ -83,39 +77,65 @@
 						<div class="row">
 			        <div class="col-md-1">Tanggal:</div>
 			        <div class="col-md-5">
-			        	<form method="get" name="form" action="">
-				        	<input type="text" name="datepicker" id="datepicker"></input>
-				        	<a href="<?php 
-				        		$cdateval = htmlspecialchars($_GET["datepicker"]);
-				        		echo "?d=" . $cdate .	"?s=" . "nomorinvoice" . "&by=" . $ascdesc . "&p=" . $pagenum;
-				        	?>">
-						    		<input type="submit">
-						    			<button type="button" class="btn btn-default">Goto</button>
-						    		</input>
-						    	</a>
+			        	<form method="post" name="form" action="">
+				        	<input type="text" name="datepicker" id="datepicker">
+				        	</input>
+									<?php
+										require 'db/connect.php';
+
+										if (!isset($_GET["d"]) || !isset($_GET["s"]) || !isset($_GET["by"]) || !isset($_GET["p"])) {
+											$cdateval = date('Y-m-d');
+											// $cdateval = "ababa";
+											$sortby = "nomorinvoice";
+											$ascdesc = "desc";
+											$pagenum = 1;
+										} else {
+											$cdateval = $_GET["d"];
+											// $cdateval = "sdsd";
+											$sortby = htmlspecialchars($_GET["s"]);
+											$ascdesc = htmlspecialchars($_GET["by"]);
+											$pagenum = htmlspecialchars($_GET["p"]);
+										}
+
+										$offset = ($pagenum - 1) * 15;
+
+										// echo "<script>initdate(" . $_POST["datepicker"] . ");</script>";
+									?>								
+									<input type="submit" value="Pick Date">
+									<a href="<?php 
+									if (isset($_POST["datepicker"])) {
+			        			$cdateval = ($_POST["datepicker"]);
+			        		} else {
+			        		}
+			        		$redir = "?d=" . $cdateval .	"&s=" . $sortby . "&by=" . $ascdesc . "&p=" . $pagenum;
+			        		echo $redir;
+			        		?>">Goto</a>
+									</button>
 					    	</form>
+					    		
 			        </div>
 						</div>
+
 						<br>
 						<div class="btn-group" role="group" aria-label="...">
 						  <div class="btn-group" role="group">
-						  	<a href="<?php echo "?s=" . "nomorinvoice" . "&by=" . $ascdesc . "&p=" . $pagenum; ?>">
+						  	<a href="<?php echo "?d=" . $cdateval .	"&s=" . "nomorinvoice" . "&by=" . $ascdesc . "&p=" . $pagenum; ?>">
 						    	<button type="button" class="btn btn-default">Invoice</button>
 						    </a>
 						  </div>
 						  <div class="btn-group" role="group">
-								<a href="<?php echo "?s=" . "tanggaldatang" . "&by=" . $ascdesc . "&p=" . $pagenum; ?>">
+								<a href="<?php echo "?d=" . $cdateval .	"&s=" . "tanggaldatang" . "&by=" . $ascdesc . "&p=" . $pagenum; ?>">
 						  	  <button type="button" class="btn btn-default">Tanggal Datang</button>
 						  	</a>
 						  </div>
 						  <div class="btn-group" role="group">
-						  	<a href="<?php echo "?s=" . "tanggalpergi" . "&by=" . $ascdesc . "&p=" . $pagenum; ?>">
+						  	<a href="<?php echo "?d=" . $cdateval .	"&s=" . "tanggalpergi" . "&by=" . $ascdesc . "&p=" . $pagenum; ?>">
 						    	<button type="button" class="btn btn-default">Tanggal Pergi</button>
 						    </a>
 						  </div>
 						</div>
 
-						<a href="<?php echo "?s=" . $sortby . "&by=" . ($ascdesc == "asc" ? "desc" : "asc") . "&p=" . $pagenum; ?>">
+						<a href="<?php echo "?d=" . $cdateval .	"&s=" . $sortby . "&by=" . ($ascdesc == "asc" ? "desc" : "asc") . "&p=" . $pagenum; ?>">
 							<button type="button" class="btn btn-default btn-ascdesc pull-right">Asc/Desc</button>
 						</a>
 					</div>
@@ -131,7 +151,8 @@
 								<th>Nama Tamu</th>
 							</tr>
 							<?php
-								$result = queryDB("SELECT * FROM silutel.invoice ORDER BY $sortby $ascdesc LIMIT 15 OFFSET $offset");
+								$result = queryDB("SELECT * FROM silutel.invoice WHERE tanggaldatang>='$cdateval' AND tanggaldatang<current_date+1 ORDER BY $sortby $ascdesc LIMIT 15 OFFSET $offset");
+							// $result = queryDB("SELECT * FROM silutel.invoice ORDER BY $sortby $ascdesc LIMIT 15 OFFSET $offset");
 
 								while ($row = pg_fetch_row($result)) {
 									echo "<tr>";
