@@ -16,6 +16,7 @@
 				$result = queryDB("SELECT * FROM silutel.user WHERE Email='$user'");
 				$row = pg_fetch_row($result);
 				$_SESSION["role"] = $row[4];
+                $_SESSION["name"] = $row[1];
 				pindahPage($_SESSION["role"]);
 			}else{
 				$resp = "Password Tidak Valid!";
