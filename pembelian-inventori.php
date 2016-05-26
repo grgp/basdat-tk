@@ -9,7 +9,7 @@
     }
     else {
         if($_SESSION["role"] != "MG" && $_SESSION["role"] != "IN") {
-            header("Location: lihat-laundry.php"); //anggap ke home
+            header("Location: index.php"); //anggap ke home
         }
     }
 ?>
