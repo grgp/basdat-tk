@@ -15,7 +15,7 @@
 
 	$gantinama = $_POST['gantinama'];
 	$gantimerk = $_POST['gantimerk'];
-	$gantiemail = $_SESSION["useremail"];
+	$gantiemail = $_SESSION["userlogin"];
 	$gantijumlah = $_POST['gantijumlah'];
 	$gantialasan = $_POST['gantialasan'];
 
