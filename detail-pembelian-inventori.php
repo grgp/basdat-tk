@@ -1,5 +1,17 @@
 <?php
+
     //check for login
+    
+    session_start();
+    
+    if(!isset($_SESSION["userlogin"])){
+        header("Location: login.php");
+    }
+    else {
+        if($_SESSION["role"] != "MG" && $_SESSION["role"] != "IN") {
+            header("Location: lihat-laundry.php"); //anggap ke home
+        }
+    }
     
     if(isset($_GET["nomornota"])) {
         require 'db/connect.php';
