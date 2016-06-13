@@ -5,17 +5,15 @@ $$
     BEGIN
         IF (TG_OP = 'INSERT') THEN
             IF (SELECT COUNT(*) FROM SILUTEL.INVOICE WHERE idtamu = NEW.idtamu) >= 10 THEN
-                NEW.total = (SELECT SUM(harga)
-                                FROM invoice_kamar n, kamar k, tipe_kamar t 
-                                WHERE n.nomorinvoice = NEW.nomorinvoice AND n.nomorkamar = k.nomor 
-                                AND n.lantaikamar = k.lantai AND k.namatipekamar = t.nama);
                 NEW.discount = 10;
+                NEW.total = 0.9*NEW.total;
             END IF;
         END IF;
         IF (TG_OP = 'UPDATE') THEN
             NEW.total = NEW.total - NEW.total*(NEW.discount/100);
+        END IF;
         RETURN NEW;
-    END;
+    END
 $$
 LANGUAGE plpgsql;
 

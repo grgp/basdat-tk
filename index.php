@@ -59,6 +59,7 @@
                         if($_SESSION["role"] == "IN") echo '<li><a href="beli-inventori.php">Beli Inventori</a></li>';
 						if($_SESSION["role"] == "IN") echo '<li><a href="ganti-inventori.php">Ganti Inventori</a></li>';
 						if($_SESSION["role"] == "MG") echo '<li><a href="lihat-booking.php">Lihat Booking</a></li>';
+                        if($_SESSION["role"] == "MG" || $_SESSION["role"] == "IN") echo '<li><a href="lihat-inventori.php">Lihat Daftar Inventori</a></li>';
 						if($_SESSION["role"] == "MG" || $_SESSION["role"] == "LA") echo '<li><a href="lihat-laundry.php">Lihat Laundry</a></li>';
 						if($_SESSION["role"] == "MG" || $_SESSION["role"] == "IN") echo '<li><a href="pembelian-inventori.php">Daftar Pembelian Inventori</a></li>';
 						//<li><a href="rincian-inventori.php">Rincian Inventori</a></li>

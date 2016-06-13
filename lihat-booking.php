@@ -181,7 +181,7 @@
 							<ul class="pagination">
 
 								<?php
-									$count = (pg_fetch_row(queryDB("SELECT * FROM silutel.invoice WHERE tanggaldatang>='$cdateval' AND tanggaldatang< date '$cdateval' +1"))[0]) / 15;
+									$count = (pg_fetch_row(queryDB("SELECT count(*) FROM silutel.invoice WHERE tanggaldatang>='$cdateval' AND tanggaldatang< date '$cdateval' +1"))[0]) / 15;
 
 									for ($j = 0; $j < $count; $j++) {
 										if ($pagenum-1 == $j) {
