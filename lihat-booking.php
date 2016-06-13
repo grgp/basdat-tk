@@ -101,17 +101,17 @@
 									?>								
 									<input type="submit" value="Pick Date">
 									<a href="<?php 
-									if (isset($_POST["datepicker"])) {
-			        			$cdateval2 = ($_POST["datepicker"]);
-			        		} else {
-			        		}
-			        		$redir = "?d=" . $cdateval2 .	"&s=" . $sortby . "&by=" . $ascdesc . "&p=" . $pagenum;
-			        		echo $redir;
+										if (isset($_POST["datepicker"])) {
+				        			$cdateval2 = ($_POST["datepicker"]);
+				        		} else {
+				        		}
+				        		$redir = "?d=" . $cdateval2 .	"&s=" . $sortby . "&by=" . $ascdesc . "&p=" . $pagenum;
+				        		echo $redir;
 			        		?>">Goto</a>
-									</button>
+									
 					    	</form>
 					    	<script>$('#datepicker').datepicker({ dateFormat: 'yy/mm/dd'}).datepicker("setDate", new Date(
-					    		<?php echo $cdateval;?>
+					    		<?php echo "$cdateval";?>
 					    		));</script>
 					    		
 			        </div>

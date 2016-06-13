@@ -1,11 +1,10 @@
 <?php
+	require "db/connect.php";
 	session_start();
 	if(isset($_SESSION["userlogin"])){
-		require "db/connect.php";
-		pindahPage($_SESSION["userlogin"]);
+		
+		pindahPage($_SESSION["role"]);
 	}
-	
-	require "db/connect.php";
 	
 	$resp = "";
 	if(isset($_POST["username"])){
@@ -80,11 +79,12 @@
 		<title>Login to Simple Forum</title>
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 		<link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
-	
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="css/theme.css">
 	</head>
 	
-	<body>	
-		<nav class="navbar navbar-inverse navbar-fixed-top">
+	<body style='background-image: url("burj.jpg") !important;'>	
+		<nav class="navbar navbar-fixed-top">
 			<div class="container-fluid">
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -93,12 +93,12 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand">SILUTEL</a>
+					<a class="navbar-brand" href="index.php">SILUTEL</a>
 				</div>
 
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
-						<li class="active"><a href="login.html"><span class="glyphicon glyphicon-log-in"></span> Login Form<span class="sr-only">(current)</span></a></li>																	
+						<li class="active"><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Login Form<span class="sr-only">(current)</span></a></li>																	
 					</ul>
 				</div>
 			</div>
@@ -106,7 +106,7 @@
 		
 		<form method="POST" action="login.php">
 			<div class="panel panel-success" style="margin:auto;margin-top:150px;width:35%;opacity:.97">
-				<div class="panel-heading" style="text-align:center"><h4>Login Form</h4></div>
+				<div class="panel-heading" style="text-align:center;background-color: #375e97;color: #f6ea90;border: none;font-weight: 600;"><h4>Login Form</h4></div>
 
 				<div class="panel-body">
 					<div class="form-group">
