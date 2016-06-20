@@ -1,5 +1,10 @@
 # basdat-tk
-Group task for the database class, UI Computer Science 2016
+Group task for the database class, UI Computer Science 2016. (Basis Data (A,B,D,E) - Genap 2015/2016). Members: 
+
+- George A.
+- Joshua C.D.G.
+- M. Faisal M.
+- M. Sabiq D.
 
 ## quick guide to setting up postgresql with xampp
 
